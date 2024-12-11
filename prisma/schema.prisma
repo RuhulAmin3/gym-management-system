@@ -1,0 +1,74 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  role      Role     @default(Trainee)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trainers Trainer[]
+  trainees Trainee[]
+}
+
+model Trainer {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  userId    String?         @unique @db.ObjectId
+  user      User?           @relation(fields: [userId], references: [id])
+  specialty String
+  classes   ClassSchedule[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Trainee {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  userId   String    @unique @db.ObjectId
+  user     User      @relation(fields: [userId], references: [id])
+  bookings Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ClassSchedule {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  classDate   DateTime
+  startTime   DateTime
+  endTime     DateTime
+  trainerId   String?  @db.ObjectId
+  trainer     Trainer? @relation(fields: [trainerId], references: [id])
+  maxTrainees Int      @default(0)
+
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Booking {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  traineeId       String        @db.ObjectId
+  classScheduleId String        @db.ObjectId
+  trainee         Trainee       @relation(fields: [traineeId], references: [id])
+  classSchedule   ClassSchedule @relation(fields: [classScheduleId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  Admin
+  Trainer
+  Trainee
+}

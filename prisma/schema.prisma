@@ -49,7 +49,7 @@ model ClassSchedule {
   endTime     DateTime
   trainerId   String?  @db.ObjectId
   trainer     Trainer? @relation(fields: [trainerId], references: [id])
-  maxTrainees Int      @default(0)
+  trainees    Int     @default(0)
 
   bookings  Booking[]
   createdAt DateTime  @default(now())

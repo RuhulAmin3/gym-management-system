@@ -164,6 +164,26 @@ const updateClassSchedule = async (
   return updatedResult;
 };
 
+const assignTrainerIntoClassSchedule = async (
+  id: string,
+  trainerId: string
+) => {
+  const isExist = await prisma.classSchedule.findUnique({ where: { id } });
+  if (!isExist)
+    throw new ExtendError(StatusCodes.NOT_FOUND, "class schedule not found");
+
+  const assignTrainer = await prisma.classSchedule.update({
+    where: {
+      id: id,
+    },
+    data: {
+      trainerId,
+    },
+  });
+
+  return assignTrainer;
+};
+
 const deleteClassSchedule = async (id: string) => {
   const isExist = await prisma.classSchedule.findUnique({
     where: {
@@ -188,5 +208,6 @@ export const classScheduleService = {
   getAllClassSchedule,
   getClassSchedule,
   updateClassSchedule,
-  deleteClassSchedule, 
+  deleteClassSchedule,
+  assignTrainerIntoClassSchedule,
 };

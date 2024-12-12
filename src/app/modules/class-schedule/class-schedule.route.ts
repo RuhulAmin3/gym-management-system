@@ -33,6 +33,15 @@ router.put(
   classSchduleController.updateClassSchedule
 );
 
+router.patch(
+  "/:id",
+  // authenticate(Role.Admin),
+  dataValidationRequest(
+    ClassScheduleValidation.assignTrainerClassScheduleZodSchema
+  ),
+  classSchduleController.assignTrainerIntoClassSchedule
+);
+
 router.delete(
   "/:id",
   // authenticate(Role.Admin),

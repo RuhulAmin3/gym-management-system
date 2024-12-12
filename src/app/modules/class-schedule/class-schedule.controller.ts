@@ -59,6 +59,19 @@ const updateClassSchedule = AsyncHandler(
   }
 );
 
+const assignTrainerIntoClassSchedule = AsyncHandler(
+  async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const {trainerId} = req.body;
+    const result = await classScheduleService.assignTrainerIntoClassSchedule(id, trainerId);
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      message: "trainer assign successfully in the class schedule",
+      data: result,
+    });
+  }
+);
+
 const deleteClassSchedule = AsyncHandler(
   async (req: Request, res: Response) => {
     const {id} = req.params; 
@@ -77,4 +90,5 @@ export const classSchduleController = {
   updateClassSchedule,
   deleteClassSchedule,
   getClassSchedule,
+  assignTrainerIntoClassSchedule
 };

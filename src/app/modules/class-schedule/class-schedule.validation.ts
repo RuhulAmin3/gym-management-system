@@ -63,7 +63,17 @@ export const createClassScheduleZodSchema = z.object({
     ),
 });
 
+export const assignTrainerClassScheduleZodSchema = z.object({
+  body: z.object({
+    trainerId: z.string({
+      required_error: "trainer Id is required",
+      invalid_type_error: "Trainer ID must be a string",
+    }),
+  }),
+});
+
 export const ClassScheduleValidation = {
   createClassScheduleZodSchema,
+  assignTrainerClassScheduleZodSchema
 };
 

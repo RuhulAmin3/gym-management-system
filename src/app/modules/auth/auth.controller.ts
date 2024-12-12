@@ -10,7 +10,7 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     message: "user login successful",
-    data: accessToken ,
+    data: accessToken,
   });
 });
 
@@ -36,6 +36,6 @@ const addTrainer = AsyncHandler(async (req: Request, res: Response) => {
 
 export const authController = {
   loginUser,
-  registerTrainee, 
-  addTrainer
+  registerTrainee,
+  addTrainer,
 };

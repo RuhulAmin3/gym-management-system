@@ -3,9 +3,10 @@ import ExtendError from "../../errors/extended-error";
 import { jwtUtils } from "../../utils/jwt-helpers";
 import {StatusCodes} from "http-status-codes";
 import config from "../../config";
+import { Role } from "@prisma/client";
 
 export const authenticate =
-  (...roles: string[]) =>
+  (...roles: Role[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers.authorization?.split(" ")[1];

@@ -14,7 +14,7 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
   });
 });
 
-const RegisterTrainee = AsyncHandler(async (req: Request, res: Response) => {
+const registerTrainee = AsyncHandler(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await authService.registerTrainee(data);
   sendResponse(res, {
@@ -24,7 +24,18 @@ const RegisterTrainee = AsyncHandler(async (req: Request, res: Response) => {
   });
 });
 
+const addTrainer = AsyncHandler(async (req: Request, res: Response) => {
+  const data = req.body;
+  const result = await authService.addTrainer(data);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Trainer added successfully",
+    data: result,
+  });
+});
+
 export const authController = {
   loginUser,
-  RegisterTrainee
+  registerTrainee, 
+  addTrainer
 };

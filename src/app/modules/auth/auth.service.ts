@@ -44,13 +44,12 @@ const loginUser = async (loginData: {
 const registerTrainee = async (
   registerData: Prisma.TraineeCreateInput & Prisma.UserCreateInput
 ) => {
-
   const isExist = await prisma.user.findUnique({
     where: {
       email: registerData.email,
     },
   });
- 
+
   if (isExist) {
     throw new ExtendError(StatusCodes.CONFLICT, "Trainee user already exists");
   }
@@ -60,7 +59,7 @@ const registerTrainee = async (
     password: hashPassword(registerData.password),
     role: Role.Trainee,
   };
-  
+
   const res = await prisma.$transaction(async (tsx) => {
     const user = await tsx.user.create({
       data: userData,
@@ -78,13 +77,57 @@ const registerTrainee = async (
     return trainee;
   });
 
-  if(!res) throw new ExtendError(StatusCodes.BAD_REQUEST, "failed to create trainee account");
+  if (!res)
+    throw new ExtendError(
+      StatusCodes.BAD_REQUEST,
+      "failed to create trainee account"
+    );
 
   return res;
+};
 
+const addTrainer = async (
+  trainerData: Prisma.TrainerCreateInput & Prisma.UserCreateInput
+) => {
+  const isExist = await prisma.user.findUnique({
+    where: { email: trainerData.email },
+  });
+
+  if (isExist)
+    throw new ExtendError(
+      StatusCodes.CONFLICT,
+      "Trainer already exit with the provided email"
+    );
+
+  const userData = {
+    email: trainerData.email,
+    password: hashPassword(trainerData.password),
+    role: Role.Trainer,
+  };
+
+  const result = await prisma.$transaction(async (tsx) => {
+    const user = await tsx.user.create({
+      data: userData,
+    });
+
+    const data = {
+      name: trainerData.name,
+      specialty: trainerData.specialty,
+      userId: user.id,
+    };
+
+    const trainer = await tsx.trainer.create({
+      data: data,
+    });
+
+    return trainer;
+  });
+
+  return result;
 };
 
 export const authService = {
   loginUser,
-  registerTrainee
+  registerTrainee,
+  addTrainer,
 };

@@ -14,7 +14,7 @@ app.use(cookiParser());
 
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("In the name of Allah");
+  res.send("In the name of Allah!. Wellcome to the Gym Managemet system server");
 });
 
 app.use("/api/v1", routes);

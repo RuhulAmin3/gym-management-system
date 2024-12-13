@@ -10,26 +10,26 @@ const router = express.Router();
 
 router.get(
   "/",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   trainerController.getAllTrainer
 );
 
 router.get(
   "/:id",
-  // authenticate(Role.Admin, Role.Trainer),
+  authenticate(Role.Admin, Role.Trainer),
     trainerController.getTrainer
 );
 
 router.patch(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   dataValidationRequest(trainerValidation.updateTrainerZodSchema),
   trainerController.updateTrainer
 );
  
 router.delete(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   trainerController.deleteTrainer
 );
 

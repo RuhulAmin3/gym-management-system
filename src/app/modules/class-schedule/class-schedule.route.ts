@@ -9,33 +9,33 @@ const router = express.Router();
 
 router.post(
   "/",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   dataValidationRequest(ClassScheduleValidation.createClassScheduleZodSchema),
   classSchduleController.createClassSchedule
 );
 
 router.get(
   "/",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   classSchduleController.getAllClassSchedule
 );
 
 router.get(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   classSchduleController.getClassSchedule
 );
 
 router.put(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   dataValidationRequest(ClassScheduleValidation.createClassScheduleZodSchema),
   classSchduleController.updateClassSchedule
 );
 
 router.patch(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   dataValidationRequest(
     ClassScheduleValidation.assignTrainerClassScheduleZodSchema
   ),
@@ -44,7 +44,7 @@ router.patch(
 
 router.delete(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   classSchduleController.deleteClassSchedule
 );
 

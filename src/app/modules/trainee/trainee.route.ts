@@ -8,36 +8,35 @@ import { traineeValidation } from "./trainee.validation";
 
 const router = express.Router();
 
-
 router.get(
   "/",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   traineeController.getAllTrainee
 );
 
 router.post(
   "/booking",
-  // authenticate(Role.Trainee),
+  authenticate(Role.Trainee),
   dataValidationRequest(traineeValidation.addBookingZodSchema),
   traineeController.addBooking
 );
 
 router.get(
   "/:id",
-  // authenticate(Role.Admin, Role.Trainee),
+  authenticate(Role.Admin, Role.Trainee),
   traineeController.getTrainee
 );
 
 router.patch(
   "/:id",
-  // authenticate(Role.Trainee),
+  authenticate(Role.Trainee),
   dataValidationRequest(traineeValidation.updateTraineeZodSchema),
   traineeController.updateTrainee
 );
 
 router.delete(
   "/:id",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   traineeController.deleteTrainee
 );
 

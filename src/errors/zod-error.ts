@@ -10,6 +10,6 @@ export const handleZodError = (err: ZodError): IGenericErrorResponse => {
   return {
     statusCode,
     message: "Zod validation Error",
-    errorMessages: errors,
+    errorDetails: errors,
   };
 };

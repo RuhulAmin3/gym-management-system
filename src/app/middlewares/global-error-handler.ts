@@ -19,7 +19,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
     const simplifiedError = handleZodError(err);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
-    errorDetails = simplifiedError.errorMessages;
+    errorDetails = simplifiedError.errorDetails;
   } else if (err instanceof ExtendError) {
     statusCode = err.statusCode;
     message = err.message;
@@ -28,7 +28,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
     message = err?.message;
     errorDetails = err?.message ? [{ field: "", message: err?.message }] : [];
   }
-
+  
   // generic error format send for frontend;
   res.status(statusCode).json({
     success: false,

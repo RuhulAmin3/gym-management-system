@@ -351,7 +351,7 @@ The Gym Management System is designed to streamline the management of gym operat
   ```
 
 #### Update Single Class Schedule
-- **Endpoint**: `api/v1/trainer/:id` (PUT) - Update single class schedule
+- **Endpoint**: `api/v1/class-schedule/:id` (PUT) - Update single class schedule
 - **Request Body**:
   ```json
   {
@@ -381,7 +381,7 @@ The Gym Management System is designed to streamline the management of gym operat
   ```
 
 #### Assign Trainer in Class Schedule
-- **Endpoint**: `api/v1/trainer/:id` (PATCH) - assign trainer into a class schedule
+- **Endpoint**: `api/v1/class-schedule/:id` (PATCH) - assign trainer into a class schedule
 - **Request Body**:
   ```json
   {

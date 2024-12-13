@@ -6,5 +6,5 @@ export type IGenericErrMessage = {
   export type IGenericErrorResponse = {
     statusCode: number;
     message: string;
-    errorMessages: IGenericErrMessage[];
+    errorDetails: IGenericErrMessage[];
   };

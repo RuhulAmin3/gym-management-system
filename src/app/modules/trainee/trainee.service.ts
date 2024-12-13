@@ -8,7 +8,6 @@ import {
 import { prisma } from "../../../utils/prisma-client";
 import { Prisma } from "@prisma/client";
 
-
 const addBooking = async (data: {
   classScheduleId: string;
   traineeId: string;
@@ -22,7 +21,7 @@ const addBooking = async (data: {
     })) || {};
 
     // check availability
-  if (trainees != null && trainees >= 5) {
+  if (trainees != null && trainees >= 10) {
     throw new ExtendError(
       StatusCodes.BAD_REQUEST,
       "The class schedule is full!"
@@ -48,7 +47,6 @@ const addBooking = async (data: {
   });
 
   return result;
-
 };
 
 const getAllTrainee = async (paginationOptions: IOptions) => {

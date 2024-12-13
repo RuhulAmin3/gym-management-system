@@ -115,10 +115,9 @@ const deleteTrainee = async (id: string) => {
       id: id,
     },
   });
-
+  
   if (!isExist)
     throw new ExtendError(StatusCodes.NOT_FOUND, "trainee not found");
-
   await prisma.trainee.delete({ where: { id } });
 };
 

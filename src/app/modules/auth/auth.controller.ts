@@ -18,7 +18,7 @@ const registerTrainee = AsyncHandler(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await authService.registerTrainee(data);
   sendResponse(res, {
-    statusCode: StatusCodes.OK,
+    statusCode: StatusCodes.CREATED,
     message: "Trainee account created successfully",
     data: result,
   });
@@ -28,7 +28,7 @@ const addTrainer = AsyncHandler(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await authService.addTrainer(data);
   sendResponse(res, {
-    statusCode: StatusCodes.OK,
+    statusCode: StatusCodes.CREATED,
     message: "Trainer added successfully",
     data: result,
   });

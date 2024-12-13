@@ -26,7 +26,6 @@ export const authenticate =
       if (roles.length && !roles.includes(varifiedUser.role)) {
         throw new ExtendError(StatusCodes.FORBIDDEN, "you are forbidden user");
       }
-
       next();
     } catch (err) {
       next(err);

@@ -16,7 +16,7 @@ router.get(
 
 router.get(
   "/:id",
-  authenticate(Role.Admin, Role.Trainer),
+  // authenticate(Role.Admin, Role.Trainer),
     trainerController.getTrainer
 );
 

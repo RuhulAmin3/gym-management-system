@@ -21,9 +21,16 @@ router.post(
 
 router.post(
   "/trainer",
-  // authenticate(Role.Admin),
+  authenticate(Role.Admin),
   dataValidationRequest(AuthValidation.addTrainerZodSchema),
   authController.addTrainer
+);
+
+router.post(
+  "/update-password",
+  authenticate(Role.Admin, Role.Trainee, Role.Trainer),
+  dataValidationRequest(AuthValidation.updatePaswordZodSchema),
+  authController.updatePassword
 );
 
 export const authRoutes = router;

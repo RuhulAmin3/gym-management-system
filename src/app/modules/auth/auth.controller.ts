@@ -34,8 +34,22 @@ const addTrainer = AsyncHandler(async (req: Request, res: Response) => {
   });
 });
 
+const updatePassword = AsyncHandler(async (req: Request, res: Response) => {
+  const {oldPassword, newPassword} = req.body;
+  const {userId} = req.user || {};
+
+  const result = await authService.updatePassword(userId, oldPassword, newPassword);
+  
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "user password updated successfully",
+    data: result,
+  });
+});
+
 export const authController = {
   loginUser,
   registerTrainee,
   addTrainer,
+  updatePassword,
 };

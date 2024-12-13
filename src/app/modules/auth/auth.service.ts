@@ -6,7 +6,7 @@ import { prisma } from "../../../utils/prisma-client";
 import { jwtUtils } from "../../../utils/jwt-helpers";
 import { Secret } from "jsonwebtoken";
 import { Prisma, Role } from "@prisma/client";
-import { hashPassword } from "../../../utils/hash-password";
+import { comparePassword, hashPassword } from "../../../utils/hash-password";
 
 const loginUser = async (loginData: {
   email: string;
@@ -126,8 +126,45 @@ const addTrainer = async (
   return result;
 };
 
+const updatePassword = async (
+  userId: string,
+  oldPassword: string,
+  newPassword: string
+) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      password: true,
+    },
+  });
+
+  if (!isUserExist)
+    throw new ExtendError(StatusCodes.NOT_FOUND, "user does not exist");
+
+  const isPasswordMatched = comparePassword(oldPassword, isUserExist.password);
+
+  if (!isPasswordMatched) {
+    throw new ExtendError(StatusCodes.BAD_REQUEST, "old password is incorrect");
+  }
+
+  const hashedPassword = hashPassword(newPassword);
+
+  const { password, ...updateUser } = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+  return updateUser;
+};
+
 export const authService = {
   loginUser,
   registerTrainee,
   addTrainer,
+  updatePassword,
 };

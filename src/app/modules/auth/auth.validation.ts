@@ -48,8 +48,20 @@ const addTrainerZodSchema = z.object({
   }),
 });
 
+const updatePaswordZodSchema = z.object({
+  body: z.object({
+    oldPassword: z.string({
+      required_error: "oldPassword is required",
+    }),
+    newPassword: z.string({
+      required_error: "newPassword is required",
+    }),
+  }),
+});
+
 export const AuthValidation = {
   loginZodSchema,
   registerTraineeZodSchema,
   addTrainerZodSchema,
+  updatePaswordZodSchema
 };
